@@ -13,10 +13,15 @@ print("Best Strategy:", best_strategy)
 # Further read
 
 Gypteau, J., Otero, F. E. B., & Kampouridis, M. (2015). Generating Directional Change Based Trading Strategies with Genetic Programming.
+
 Wang, X., Kampouridis, M., & Tsang, E. P. K. (2022). Genetic Programming for Combining Directional Changes Indicators in International Stock Markets.
+
 Adegboye, A., Kampouridis, M., & Otero, F. E. B. (2023). Algorithmic Trading with Directional Changes.
+
 Aloud, F., Tsang, E. P. K., & Olsen, R. (2012). A Directional Change Based Trading Strategy with Dynamic Thresholds.
+
 Wang, X., Kampouridis, M., & Tsang, E. P. K. (2023). Multi-Objective Optimisation and Genetic Programming for Trading by Combining Technical Analysis and Directional Changes.
+
 
 # Requirements
 The code requires Python 3.x and NumPy for execution.
