@@ -39,4 +39,5 @@ The code requires Python 3.x and NumPy, random, csv, copy libraries for executio
  * 
  * GA-for-DC-trading can not be copied and/or distributed without the express
  * permission of Lucas Velimirovici
+
  *******************************************************/
