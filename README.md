@@ -35,7 +35,7 @@ The code requires Python 3.x and NumPy, random, csv, copy libraries for executio
  * Copyright (C) 2024-2099 Lucas Velimirovici, lucas.velimirovici@gmail.com - All rights reserved.
  * 
  * This file, totally or in parts, contains proprietary code that may or may not be used in my dissertation thesis.
- * Therefore, unauthorized copying of this file, via any medium is strictly prohibited
+ * Therefore, unauthorized copying of any content, via any medium is strictly prohibited
  * 
  * GA-for-DC-trading can not be copied and/or distributed without the express
  * permission of Lucas Velimirovici
