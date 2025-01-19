@@ -1,0 +1,9 @@
+Week 2 and 3 of 2025 (6 - 19 Jan):
+
+	- Total overhaul of the first implementation.
+	- Partial work done on the second implementation.
+	- Update of additional GitHub files (added changelog, 
+	  added result file for the first implementation, changed readme
+	  file in order to match the current implementation, update to the license
+	  type - from open-sourced to close-sourced, prohibiting any unauthorized copy
+	  of any parts of the project, via any medium).
