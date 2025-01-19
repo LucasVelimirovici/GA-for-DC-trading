@@ -1,0 +1,89 @@
+Upon running the code with the paper-specific parameters:
+
+Population initialised
+
+Gen 1: 629.69 // 619.57 // 598.69 // 576.6 // 572.63
+Gen 2: 629.69 // 619.57 // 598.69 // 598.69 // 598.34
+Gen 3: 629.69 // 619.57 // 598.69 // 598.69 // 598.34
+Gen 4: 629.69 // 619.57 // 608.43 // 598.69 // 598.69
+Gen 5: 629.69 // 629.69 // 619.57 // 608.43 // 601.91
+Gen 6: 637.63 // 629.69 // 629.69 // 629.69 // 629.69
+Gen 7: 653.03 // 637.63 // 637.63 // 629.69 // 629.69
+Gen 8: 653.03 // 637.63 // 637.63 // 637.63 // 637.63
+Gen 9: 669.52 // 653.03 // 653.03 // 637.63 // 637.63
+Gen 10: 669.52 // 653.03 // 639.91 // 637.63 // 637.63
+Gen 11: 669.52 // 653.03 // 639.91 // 637.63 // 637.63
+Gen 12: 669.52 // 669.52 // 669.52 // 653.03 // 646.36
+Gen 13: 669.52 // 669.52 // 669.52 // 669.52 // 669.52
+Identical performance top 5 solutions; computation halted at 13th computation.
+Max. achieved return: 669.52%
+
+
+Computation resumed; algorithm must go thru a minimum of a quarter of the intended generations.
+
+
+Gen 14: 669.52 // 669.52 // 669.52 // 653.03 // 648.64
+Gen 15: 669.52 // 669.52 // 669.52 // 665.96 // 653.03
+Gen 16: 669.52 // 669.52 // 669.52 // 665.96 // 653.03
+Gen 17: 669.52 // 669.52 // 669.52 // 665.96 // 653.09
+Gen 18: 669.52 // 669.52 // 669.52 // 669.52 // 669.52
+Identical performance top 5 solutions; computation halted at 18th computation.
+Max. achieved return: 669.52%
+
+
+Computation resumed; algorithm must go thru a minimum of a quarter of the intended generations.
+
+
+Gen 19: 669.52 // 669.52 // 669.52 // 669.52 // 669.52
+Identical performance top 5 solutions; computation halted at 19th computation.
+Max. achieved return: 669.52%
+
+
+Computation resumed; algorithm must go thru a minimum of a quarter of the intended generations.
+
+
+Gen 20: 669.52 // 669.52 // 669.52 // 669.52 // 669.52
+Identical performance top 5 solutions; computation halted at 20th computation.
+Max. achieved return: 669.52%
+
+
+Computation resumed; algorithm must go thru a minimum of a quarter of the intended generations.
+
+
+Gen 21: 669.52 // 669.52 // 669.52 // 669.52 // 669.52
+Identical performance top 5 solutions; computation halted at 21th computation.
+Max. achieved return: 669.52%
+
+
+Computation resumed; algorithm must go thru a minimum of a quarter of the intended generations.
+
+
+Gen 22: 669.52 // 669.52 // 669.52 // 669.52 // 669.52
+Identical performance top 5 solutions; computation halted at 22th computation.
+Max. achieved return: 669.52%
+
+
+Computation resumed; algorithm must go thru a minimum of a quarter of the intended generations.
+
+
+Gen 23: 669.52 // 669.52 // 669.52 // 669.52 // 669.52
+Identical performance top 5 solutions; computation halted at 23th computation.
+Max. achieved return: 669.52%
+
+
+Computation resumed; algorithm must go thru a minimum of a quarter of the intended generations.
+
+
+Gen 24: 669.52 // 669.52 // 669.52 // 669.52 // 669.52
+Identical performance top 5 solutions; computation halted at 24th computation.
+Max. achieved return: 669.52%
+
+
+Computation resumed; algorithm must go thru a minimum of a quarter of the intended generations.
+
+
+Gen 25: 669.52 // 669.52 // 669.52 // 669.52 // 669.52
+Identical performance top 5 solutions; computation halted at 25th computation.
+Max. achieved return: 669.52%
+Best solution: 
+['xor', ['and', 0.1, ['xor', ['xor', 0.03, 0.07], ['or', ['and', ['nor', ['not', ['or', 0.03, 0.01]], 0.08], 0.01], ['and', 0.07, ['and', 0.02, ['or', ['not', 0.07], 0.03]]]]]], ['nor', 0.02, 0.05]]
