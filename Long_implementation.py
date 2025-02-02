@@ -6,24 +6,20 @@ import statistics
 
 funcs = ['and', 'or']
 comps=['<','>']
-indicators=['TMV/NA', 'OSV/NA', 'AVG_OSV/3', 'AVG_OSV/5', 'AVG_OSV/10', 'RDC/NA', 'AVG_RDC/3', 
-'AVG_RDC/5', 'AVG_RDC/10', 'TDC/NA', 'AVG_TDC/3', 'AVG_TDC/5', 'AVG_TDC/10', 
-'NDC/10', 'NDC/20', 'NDC/30', 'NDC/40', 'NDC/50', 'CDC/10', 'CDC/20', 'CDC/30', 
+indicators=['TMV/NA', 'OSV/NA', 'AVG_OSV/3', 'AVG_OSV/5', 'AVG_OSV/10', 'RDC/NA', 'AVG_RDC/3',
+'AVG_RDC/5', 'AVG_RDC/10', 'TDC/NA', 'AVG_TDC/3', 'AVG_TDC/5', 'AVG_TDC/10',
+'NDC/10', 'NDC/20', 'NDC/30', 'NDC/40', 'NDC/50', 'CDC/10', 'CDC/20', 'CDC/30',
 'CDC/40', 'CDC/50', 'AT/10', 'AT/20', 'AT/30', 'AT/40', 'AT/50']
-DC_thresh=[0.001,0.002,0.005,0.01,0.02]
-ndays=[1,5,15]
-r_target=[1,5,10,20]
 dir_thresh = (0.00, 1)
-min_depth = 2
-max_depth = 2
+min_depth = 1
+max_depth = 6
 pop_size = 500
-gens = 100
+gens = 50
+cross_prob=0.95
+mut_prob=1-cross_prob
 t_size = 2
 chance_next_tree = 0.65
-cross_prob = 0.95
-mut_prob = 0.01
 elitism_ratio=0.01
-Risk_free=4.2
 mgd=0
 
 def generate_tree(depth):
@@ -513,7 +509,7 @@ def AT(data,pricedata,thresh,period):
       #print(e)
       serie.append(None)
   return serie
-  
+
 
 def CDC(data,pricedata,thresh,period):
   serie=[]
@@ -537,9 +533,6 @@ def normalise(lst):
     max_val = max(numeric_values)
     return [(x - min_val) / (max_val - min_val) if x is not None else None for x in lst]
 
-with open('s&p.csv', 'r') as file:
-  data = [float(row[0]) for row in csv.reader(file) if row[0].replace('.', '', 1).isdigit()]
-
 def run_tree(tree,indices):
 
   if tree[0]=="<" or tree[0]==">":
@@ -549,7 +542,7 @@ def run_tree(tree,indices):
 
     if elem[1]==None:
       return None
-    
+
     if tree[0]=="<":
       if elem[1]<tree[2]:
         return True
@@ -575,7 +568,7 @@ def fitness(tree,data,indices,time,rtr):
     ind_set=[]
     for elem in indices:
       ind_set.append([elem[0],elem[1][i]])
-    
+
     response=run_tree(tree,ind_set)
 
     if response==True and index==0:
@@ -588,16 +581,84 @@ def fitness(tree,data,indices,time,rtr):
         print("exit "+str(buy_price)+" "+str(data[i]))
         index=0
         results.append(round((0.99975*data[i]-1.00025*buy_price)/(1.00025*buy_price)*100,4))
- 
+
   return results,(sum(results)/len(results)-Risk_free)/(variance(results)**(1/2))
 
 def variance(rez):
     mean_val = sum(rez) / len(rez)
     return sum((x - mean_val) ** 2 for x in rez) / len(rez)
 
-def GA_loop():
 
+def run_tree(tree,indices):
+
+  if tree[0]=="<" or tree[0]==">":
+    for elem in indices:
+      if elem[0]==tree[1]:
+        break
+
+    if elem[1]==None:
+      return None
+
+    if tree[0]=="<":
+      if elem[1]<tree[2]:
+        return True
+      else:
+        return False
+    if tree[0]==">":
+      if elem[1]>tree[2]:
+        return True
+      else:
+        return False
+
+  else:
+    if tree[0]=="and":
+      return run_tree(tree[1],indices) and run_tree(tree[2],indices)
+    else:
+      return run_tree(tree[1],indices) or run_tree(tree[2],indices)
+
+
+def fitness(tree,data,indices,time,rtr):
+  index=0
+  results=[]
+  for i in range(len(data)):
+    ind_set=[]
+    for elem in indices:
+      ind_set.append([elem[0],elem[1][i]])
+
+    response=run_tree(tree,ind_set)
+
+    if response==True and index==0:
+      index=1
+      buy_time=i
+      buy_price=data[i]
+
+    if index==1:
+      if i-buy_time>=time or data[i]>=(1+rtr)*buy_price:
+        index=0
+        results.append(round((0.99975*data[i]-1.00025*buy_price)/(1.00025*buy_price)*100,4))
+  try:
+    Sharpe=(sum(results)/len(results)-Risk_free)/(variance(results)**(1/2))
+  except:
+    Sharpe=-100
+  return Sharpe, results
+
+def variance(rez):
+    mean_val = sum(rez) / len(rez)
+    return sum((x - mean_val) ** 2 for x in rez) / len(rez)
+
+def read_data():
+  with open('s&p.csv', 'r') as file:
+    data = [float(row[0]) for row in csv.reader(file) if row[0].replace('.', '', 1).isdigit()]
+  return data
+
+def GA_loop(thresh,rtr,time):
+  print("Run with thresh="+str(thresh)+", return target="+str(rtr)+", time interval="+str(time)+".")
+  data=read_data()[int(0.65*len(read_data())):]
+  testdata=read_data()[int(0.65*len(read_data())):]
   indic_list=[]
+  c1=0
+  c2=0
+
   for mix in indicators:
     func_name, arg = mix.split('/')
     arg = int(arg) if arg != 'NA' else None
@@ -605,7 +666,111 @@ def GA_loop():
       indic_list.append([mix,normalise(globals()[func_name](dissect2(data,thresh),data,thresh,arg))])
     else:
       indic_list.append([mix,normalise(globals()[func_name](dissect2(data,thresh),data,thresh,arg)[0])])
-  
+
   prev_pop=[]
   for tree in range(pop_size):
     prev_pop.append(generate_tree(0))
+
+
+  for i in range(gens):
+
+    print("Generation "+str(i+1)+":")
+    res=[]
+    next_gen=[]
+
+
+    for j in range(len(prev_pop)):
+      res.append([fitness(prev_pop[j],data, indic_list,rtr,time)[0],prev_pop[j]])
+
+    res.sort(reverse=True,key=lambda x:x[0])
+
+    if res[0][0]==res[1][0]==res[2][0]==res[3][0]==res[4][0]:
+      c1=1
+    if i>=gens/2:
+      c0=1
+    
+    print("Shrape ratio top 5: "+str(round(res[0][0],2))+" // "+str(round(res[1][0],2))+" // "+str(round(res[2][0],2))+" // "+str(round(res[3][0],2))+" // "+str(round(res[4][0],2)))
+    print("\n")
+
+    if c1==1 and c2==1:
+      print("Break conditions met. Algorithm haulted.")
+
+    #Elitism
+    next_gen.append(res[0][1])
+
+    while len(next_gen)<=len(res):
+      rand=round(random.uniform(0,1), 3)
+
+      if rand<=0.05:
+
+        t1=res[random.randint(0,len(res))-1]
+        t2=res[random.randint(0,len(res))-1]
+
+        if t1[0]<t2[0]:
+          next_gen.append(mutate(t2[1]))
+
+        if t1[0]>t2[0]:
+          next_gen.append(mutate(t1[1]))
+
+        if t1[0]==t2[0]:
+          next_gen.append(mutate(random.choice([t1[1],t2[1]])))
+
+      else:
+
+        p11=res[random.randint(0,len(res))-1]
+        p12=res[random.randint(0,len(res))-1]
+        p21=res[random.randint(0,len(res))-1]
+        p22=res[random.randint(0,len(res))-1]
+
+        if p11[0]>p12[0]:
+          p1=p11[1]
+        if p11[0]<p12[0]:
+          p1=p11[1]
+        if p11[0]==p12[0]:
+          p1=random.choice([p11[1],p12[1]])
+
+        if p21[0]>p22[0]:
+          p2=p21[1]
+        if p21[0]<p22[0]:
+          p2=p21[1]
+        if p21[0]==p22[0]:
+          p2=random.choice([p21[1],p22[1]])
+
+        ch1,ch2=crossover(p1,p2)
+
+        next_gen.append(p1)
+        next_gen.append(p2)
+        next_gen.append(c1)
+        next_gen.append(c2)
+    
+    while len(next_gen)>pop_size:
+      next_gen.pop(-1)
+    
+    if res==next_gen:
+      print("smth not ok")
+    
+    prev_gen=next_gen
+    #print(prev_gen)
+
+  if c1==1 and c2==1:
+    return res[0:5], testdata
+
+  else:
+    res=[]
+    for j in range(len(prev_pop)):
+      res.append([fitness(prev_pop[j],data, indic_list,rtr,time)[0],prev_pop[j]])
+    res.sort(reverse=True,key=lambda x:x[0])
+
+    return [res[0:5],testdata]
+    
+
+Risk_free=4.2
+DC_thresh=[0.001,0.002,0.005,0.01,0.02]
+ndays=[1,5,15]
+r_target=[1,5,10,20]
+sols=[]
+for thresh in DC_thresh:
+  for days in ndays:
+    for rt in r_target:
+      sols.append([[thresh,days,rt],GA_loop(thresh,rt,days)])
+      print("\n")
