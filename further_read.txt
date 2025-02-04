@@ -1,0 +1,20 @@
+Adesola, A., Michael, K., Fernando E. B., O.: Algorithmic trading with directional changes. Artificial Intelligence Review (2023)
+
+Aloud, M.E.: Time series analysis indicators under directional changes: The case of Saudi stock market. International Journal of Economics and Financial Issues (2016)
+
+Feras, A., Edward P. K., T., Robert, O.: A directional change based trading strategy with dynamic thresholds. IEEE Symposium Series on Computational Intelligence (SSCI) (2012)
+
+Holland, J.: Adaptation in Natural and Artificial Systems (1975)
+
+Jeremie, G., Fernando E. B., O., Michael, K.: Generating directional change based trading strategies with genetic programming. Springer Link (2015)
+
+Markowitz, H.: Modern portfolio theory. Journal of Finance (1952)
+
+Shiryaev, A., Xu, Z., Zhou, X.Y.: Thou shalt buy and hold. Quantitative Finance (2008)
+
+Tsang, E.P.K.: Directional changes, definitions. Tech. Rep. WP050-10, Centre for Computational Finance and Economic Agents (CCFEA), University of Essex (2010), https://www.bracil.net/finance/papers/Tsang-DC-CCFEA_WP050-2010.pdf, revised December 1, 2010
+
+Xinpeng, W., Michael, K., Edward P. K., T.: Genetic programming for combining directional changes indicators in international stock markets. Springer Link (2022)
+
+Xinpeng, W., Michael, K., Edward P. K., T.: Multi-objective optimisation and genetic programming for trading by combining technical analysis and directional changes. IEEE Congress on Evolutionary Computation (CEC) (2023)
+
