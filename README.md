@@ -10,8 +10,12 @@ After the timeserie is converted into multiple sequences (of the same size) of b
 This whole process is repreaded across 300 generations, with standard Genetic Programming (GP) processes taking place: crossover, reproduction, mutation.
 The Genetic Loop returns the strategy with the highest return.
 
-#Long implementation
+# Long implementation
 
-The implementation begins by generating a population of random trading strategies, represented as logic trees. These trees are refined through evolutionary operations like mutation, crossover, and tournament selection. Fitness is evaluated by simulating trades on historical market data, starting with a predefined cash balance or using the Sharpe Ratio as a gauge for invetment quality. Directional changes are detected based on thresholds assigned to the leaf nodes of the trees, while logical operations at internal nodes define how these signals combine to generate buy or sell actions.
+Based afer Long's work (see reference [10] in further_read.txt), this algorithm makes use of a similar logic binary tree strategy structure. However, the terminal nodes are not simple threshold values, but rather a triplet of (indicator, comparator, value). These indicators reflect different aspects of the Directional Change timeserie dissection, and are computed for each point of the dataset, yielding multiple same-size sequences of indicator values for each datapoint of the timeserie. The terminal nodes are testes at each index of the resulting indicator aggregate, and a binary result (0 or 1) is outputted based on whether or not the logic sence is true or falce (for example, a triplet of (IND1,>,0.33) will output 1 (True) at datapoints where indicator IND1 > 0.33 ). Once all leaf nodes are evaluated, non-terminal logic nodes come into play, and the root node will either output 1 or 0. If the strategy output is equal to 1, one unit of equity is bought and held until either one of the following conditions is met : the equity unit was held n days or the return on purached equity is greater than r (n and r serve as hyperparameters).
+
+After running the strategy across the whole dataset and recording pairs of (buy price, sale price), the return of each pair of events is computed (and adjusted for trading fees) and finally, the Sharpe ratio of the strategy is computed. This Sharpe ratio will further serve as the fitness parameter of each individual and will further dictate its impact in the genetic processes that take place (crossover, mutation).
+The 10Y US Treasury yield was used as the risk-free return rate for the computation of Sharpe ratio's.
+
 
 
